@@ -32,10 +32,10 @@ public class SendMail {
     }
 
     public static MimeMessage createMimeMessage(Session session, String subject, String content,
-                                         String fromMail, String fromName,
-                                         String[] to,
-                                         String[] cc,
-                                         String[] bcc
+                                                String fromMail, String fromName,
+                                                String[] to,
+                                                String[] cc,
+                                                String[] bcc
     ) throws Exception {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
@@ -47,9 +47,11 @@ public class SendMail {
         message.setFrom(new InternetAddress(fromMail, fromName, "UTF-8"));
 
         // 3. To: 收件人（可以增加多个收件人、抄送、密送）
-        Address[] toAddresses = new Address[to.length];
-        handleAddress(to, toAddresses);
-        message.addRecipients(Message.RecipientType.TO, toAddresses);
+        if (to != null && to.length > 0) {
+            Address[] toAddresses = new Address[to.length];
+            handleAddress(to, toAddresses);
+            message.addRecipients(Message.RecipientType.TO, toAddresses);
+        }
 
         if (cc != null && cc.length > 0) {
             Address[] ccAddresses = new Address[cc.length];
@@ -80,10 +82,10 @@ public class SendMail {
     }
 
     public static Boolean sendEmail(String subject, String content,
-                             String fromName,
-                             String[] to,
-                             String[] cc,
-                             String[] bcc) {
+                                    String fromName,
+                                    String[] to,
+                                    String[] cc,
+                                    String[] bcc) {
         String myEmailAccount = ConfigUtil.getMyEmailAccount();
         String myEmailPassword = ConfigUtil.getMyEmailPassword();
         String myEmailSMTPHost = ConfigUtil.getMyEmailSmtpHost();
