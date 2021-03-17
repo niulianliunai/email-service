@@ -17,9 +17,7 @@ import java.util.*;
 
 @Service
 public class SendMail {
-    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日EEEE");
-
-    private void handleAddress(String[] to, Address[] addresses) {
+    private static void handleAddress(String[] to, Address[] addresses) {
         if (to.length > 0) {
             for (int i = 0; i < to.length; i++) {
                 String toName = to[i].split(":")[0];
@@ -33,7 +31,7 @@ public class SendMail {
         }
     }
 
-    public MimeMessage createMimeMessage(Session session, String subject, String content,
+    public static MimeMessage createMimeMessage(Session session, String subject, String content,
                                          String fromMail, String fromName,
                                          String[] to,
                                          String[] cc,
@@ -81,7 +79,7 @@ public class SendMail {
         return message;
     }
 
-    public Boolean sendEmail(String subject, String content,
+    public static Boolean sendEmail(String subject, String content,
                              String fromName,
                              String[] to,
                              String[] cc,
